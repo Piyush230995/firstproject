@@ -61,7 +61,7 @@ public class Patient{
 
     }
 
-    public boolean getPatientByid(int id){
+    public boolean getPatientById(int id){
         String query = "SELECT * FROM patients WHERE id = ?;";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
