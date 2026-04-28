@@ -24,7 +24,7 @@ public class Patient{
         String gender = scanner.next();
 
         try{
-            String query = "INSERT INTO patients(name, age, gender) VALUES (?,?,?)";
+            String query = "INSERT INTO patients(name, age, gender) VALUES (?,?,?);";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
             ps.setInt(2, age);
@@ -43,8 +43,8 @@ public class Patient{
 
 
     public void viewPatients(){
+        String query = "SELECT * FROM patients;";
         try{
-            String query = "SELECT * FROM patients";
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -59,6 +59,21 @@ public class Patient{
         e.printStackTrace();
         }
 
+    }
+
+    public boolean getPatientByid(int id){
+        String query = "SELECT * FROM patients WHERE id = ?;";
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                return true;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
