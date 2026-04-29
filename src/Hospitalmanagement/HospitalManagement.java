@@ -25,33 +25,35 @@ public class HospitalManagement {
             Doctor doctor = new Doctor(con);
             Appointments appointments = new Appointments(patient, doctor, con, scanner);
 
-            System.out.println("HOSPITAL MANAGEMENT SYSTEM ");
-            System.out.println("1. Add Patient");
-            System.out.println("2. View Patients");
-            System.out.println("3. View Doctor");
-            System.out.println("4. Book Appointment");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
+            while(true){
+                System.out.println("HOSPITAL MANAGEMENT SYSTEM ");
+                System.out.println("1. Add Patient");
+                System.out.println("2. View Patients");
+                System.out.println("3. View Doctor");
+                System.out.println("4. Book Appointment");
+                System.out.println("5. Exit");
+                System.out.print("Enter your choice: ");
+                int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    patient.addPatient();
-                    break;
-                case 2:
-                    patient.viewPatients();
-                    break;
-                case 3:
-                    doctor.viewDoctors();
-                    break;
-                case 4:
-                    appointments.bookAppointment();
-                    break;
-                case 5:
-                    return;
-                default:
-                    System.out.println("Invalid choice");
-                    break;
+                switch (choice) {
+                    case 1:
+                        patient.addPatient();
+                        break;
+                    case 2:
+                        patient.viewPatients();
+                        break;
+                    case 3:
+                        doctor.viewDoctors();
+                        break;
+                    case 4:
+                        appointments.bookAppointment();
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        System.out.println("Invalid choice");
+                        break;
+                }
             }
 
         }catch(SQLException e){

@@ -17,11 +17,14 @@ public class Doctor {
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
+            System.out.println("----------+---------------+--------------------");
+            System.out.println(" id       | name          | specialization     ");
+            System.out.println("----------+---------------+--------------------");
             while(rs.next()){
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String specialization = rs.getString("specialization");
-                System.out.printf("|%-10d|%-10s|%-10s|", id, name, specialization);
+                System.out.printf("|%-10d|%-15s|%-20s|%n", id, name, specialization);
             }
 
         } catch (SQLException e){

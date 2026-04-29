@@ -1,6 +1,7 @@
 package Hospitalmanagement;
 
 import java.sql.*;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Appointments {
@@ -22,7 +23,8 @@ public class Appointments {
         System.out.println("Enter doctor ID");
         int doctorID = scanner.nextInt();
         System.out.println("Enter appointment date");
-        String date = scanner.next();
+        String stringDate = scanner.next();
+        java.sql.Date date = java.sql.Date.valueOf(stringDate);
 
         boolean patientExists = patient.getPatientById(patientID);
         boolean doctorExists = doctor.getDoctorById(doctorID);
@@ -39,7 +41,7 @@ public class Appointments {
                             PreparedStatement ps = connection.prepareStatement(query);
                             ps.setInt(1, patientID);
                             ps.setInt(2, doctorID);
-                            ps.setString(3, date);
+                            ps.setDate(3, date);
                             int affectedRows = ps.executeUpdate();
                             if(affectedRows > 0){
                                 System.out.println("Appointment has been booked successfully");
@@ -60,13 +62,13 @@ public class Appointments {
 
     }
 
-    public boolean checkDoctorAvailability(int doctorID, String date, Connection connection){
+    public boolean checkDoctorAvailability(int doctorID, java.sql.Date date, Connection connection){
         String query = "SELECT COUNT(*) FROM appointments WHERE doctor_id = ? AND appointment_date = ?";
 
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, doctorID);
-            ps.setString(2, date);
+            ps.setDate(2, date);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 int count = rs.getInt(1);
