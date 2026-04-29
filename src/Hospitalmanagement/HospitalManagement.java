@@ -23,6 +23,7 @@ public class HospitalManagement {
             Connection con = DriverManager.getConnection(url, username, password);
             Patient patient = new Patient(con, scanner);
             Doctor doctor = new Doctor(con);
+            Appointments appointments = new Appointments(patient, doctor, con, scanner);
 
             System.out.println("HOSPITAL MANAGEMENT SYSTEM ");
             System.out.println("1. Add Patient");
