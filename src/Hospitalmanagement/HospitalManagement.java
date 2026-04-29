@@ -42,7 +42,7 @@ public class HospitalManagement {
                 case 3:
                     doctor.viewDoctors();
                 case 4:
-
+                    appointments.bookAppointment();
                 case 5:
                     return;
                 default:

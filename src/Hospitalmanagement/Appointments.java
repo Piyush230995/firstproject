@@ -1,11 +1,6 @@
 package Hospitalmanagement;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.sql.*;
-import java.util.Calendar;
 import java.util.Scanner;
 
 public class Appointments {
@@ -37,7 +32,7 @@ public class Appointments {
         } else if (patientExists && !doctorExists) {
             System.out.println("No doctor with the doctor ID exists");
         } else if (patientExists && doctorExists) {
-                    if(checkDoctorAvailability(doctorID, date)){
+                    if(checkDoctorAvailability(doctorID, date, connection)){
 
                         String query = "INSERT INTO appointments(patient_id, doctor_id, appointment_date) VALUES (?,?,?)";
                         try{
@@ -66,6 +61,20 @@ public class Appointments {
     }
 
     public boolean checkDoctorAvailability(int doctorID, String date, Connection connection){
+        String query = "SELECT COUNT(*) FROM appointments WHERE doctor_id = ? AND appointment_date = ?";
 
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, doctorID);
+            ps.setString(2, date);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                int count = rs.getInt(1);
+                return count == 0;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+            return false;
     }
 }
