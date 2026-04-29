@@ -26,13 +26,16 @@ public class HospitalManagement {
             Appointments appointments = new Appointments(patient, doctor, con, scanner);
 
             while(true){
+                System.out.println();
+                System.out.println();
                 System.out.println("HOSPITAL MANAGEMENT SYSTEM ");
                 System.out.println("1. Add Patient");
                 System.out.println("2. View Patients");
                 System.out.println("3. View Doctor");
                 System.out.println("4. Book Appointment");
-                System.out.println("5. Exit");
-                System.out.print("Enter your choice: ");
+                System.out.println("5. View Doctor's Appointments");
+                System.out.println("6. Exit");
+                System.out.print("\nEnter your choice: ");
                 int choice = scanner.nextInt();
 
                 switch (choice) {
@@ -49,9 +52,12 @@ public class HospitalManagement {
                         appointments.bookAppointment();
                         break;
                     case 5:
+                        appointments.viewAppointments();
+                        break;
+                    case 6:
                         return;
                     default:
-                        System.out.println("Invalid choice");
+                        System.out.println("\nInvalid choice");
                         break;
                 }
             }

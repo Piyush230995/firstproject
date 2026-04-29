@@ -22,7 +22,7 @@ public class Appointments {
         int patientID = scanner.nextInt();
         System.out.println("Enter doctor ID");
         int doctorID = scanner.nextInt();
-        System.out.println("Enter appointment date");
+        System.out.println("Enter appointment date (YYYY-MM-DD)");
         String stringDate = scanner.next();
         java.sql.Date date = java.sql.Date.valueOf(stringDate);
 
@@ -44,20 +44,22 @@ public class Appointments {
                             ps.setDate(3, date);
                             int affectedRows = ps.executeUpdate();
                             if(affectedRows > 0){
-                                System.out.println("Appointment has been booked successfully");
+                                System.out.println("\nAppointment has been booked successfully");
                             }else {
-                                System.out.println("Appointment could not be booked");
+                                System.out.println("\nAppointment could not be booked");
                             }
 
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
+                    }else  {
+                        System.out.println("\nDoctor already booked for the day");
                     }
 
 
 
         } else {
-            System.out.println("Patient ID and doctor ID do not match");
+            System.out.println("\nPatient ID and doctor ID do not match");
         }
 
     }
@@ -79,4 +81,32 @@ public class Appointments {
         }
             return false;
     }
+
+
+    public void viewAppointments(){
+        System.out.println("Enter doctor ID");
+        int doctorID = scanner.nextInt();
+
+        String query =  "SELECT * FROM appointments WHERE doctor_id = ?;";
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, doctorID);
+            ResultSet rs = ps.executeQuery();
+            System.out.println("-----+------------+------------+--------------------");
+            System.out.println(" id  | patient_id | doctor_id  | appointment_date  ");
+            System.out.println("-----+------------+------------+--------------------");
+            while(rs.next()){
+                int id = rs.getInt("id");
+                int patient_id = rs.getInt("patient_id");
+                int doctor_id = rs.getInt("doctor_id");
+                java.sql.Date appointment_date = rs.getDate("appointment_date");
+
+                System.out.printf("|%-5d|%-12d|%-12d|%-20s|%n", id, patient_id, doctor_id, appointment_date);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
 }
