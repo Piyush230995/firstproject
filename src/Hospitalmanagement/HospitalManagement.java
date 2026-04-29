@@ -37,16 +37,21 @@ public class HospitalManagement {
             switch (choice) {
                 case 1:
                     patient.addPatient();
+                    break;
                 case 2:
                     patient.viewPatients();
+                    break;
                 case 3:
                     doctor.viewDoctors();
+                    break;
                 case 4:
                     appointments.bookAppointment();
+                    break;
                 case 5:
                     return;
                 default:
                     System.out.println("Invalid choice");
+                    break;
             }
 
         }catch(SQLException e){
